@@ -55,5 +55,4 @@ public class StudentController implements UserController<Student> {
         studentService.edit(fullName, age, phoneNumber);
     }
 
-
 }

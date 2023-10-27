@@ -14,35 +14,28 @@ public class Main {
         StudentView studentView = getStudentView();
         TeacherView teacherView = getTeacherView();
 
+        studentView.create("Gold Digger", 19, "777-7777");
+        studentView.create("Subject Matter", 180, "111-1111");
+        studentView.create("Subject Matter", 180, "111-1111");
+        studentView.create("Zero Sub", 10, "000-0000");
+        studentView.create("SweetHome Alabama", 65, "123-4567");
+        studentView.create("Bulgur Smart", 18, "333-2222");
 
-        studentView.create("Иван Федоров", 19, "343-4343");
-        studentView.create("Полина Иванова", 18, "576-7676");
-        studentView.create("Полина Иванова", 18, "576-7676");
-        studentView.create("Феофан Сидоров", 20, "456-4554");
-//        studentView.sendOnConsole(SortType.NONE);
-        studentView.create("Терентий Попов", 17, "789-9878");
-        studentView.create("Евлампия Субботина", 18, "908-0880");
-//        studentView.sendOnConsole(SortType.NONE);
-//        studentView.sendOnConsole(SortType.FIRSTNAME);
-//        studentView.sendOnConsole(SortType.LASTNAME);
         studentView.sendOnConsole(SortType.AGE);
 
-        teacherView.create("Ираида Полонская", 32, "212-1221");
-        teacherView.create("Ираида Полонская", 32, "212-1221");
-        teacherView.create("Бенедикт Прилучин", 29, "345-4565");
-        teacherView.create("Стожар Сбруев", 37, "765-5656");
-        teacherView.create("Милолика Пожарская", 40, "978-7878");
-        teacherView.create("Софокл Волжский", 33, "901-2353");
-        teacherView.sendOnConsole(SortType.ID);
-//        teacherView.sendOnConsole(SortType.LASTNAME);
-//        teacherView.sendOnConsole(SortType.AGE);
-//        teacherView.remove("Ираида Полонская");
-//        teacherView.sendOnConsole(SortType.NONE);
-        teacherView.edit("Стожар Сбруев", 37, "765-7575");
+        teacherView.create("Hermit Frog", 12, "552-1234");
+        teacherView.create("Hermit Frog", 12, "552-1234");
+        teacherView.create("Chinga Chgook", 54, "101-6911");
+        teacherView.create("Killer Ficha", 17, "888-9898");
+        teacherView.create("Sublime Goose", 33, "333-3131");
+
         teacherView.sendOnConsole(SortType.ID);
 
-        studentView.edit("Полина Ивановна", 18, "576-7676");
-        studentView.edit("Полина Иванова", 18, "776-7676");
+        teacherView.edit("Killer Ficha", 47, "888-9898");
+        teacherView.sendOnConsole(SortType.ID);
+
+        studentView.edit("Subject Matter", 180, "111-1111");
+        studentView.edit("Subject Matter", 18, "111-1111");
         studentView.sendOnConsole(SortType.AGE);
 
     }
