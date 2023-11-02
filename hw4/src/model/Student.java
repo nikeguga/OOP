@@ -2,13 +2,14 @@ package model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
+@Setter
 @EqualsAndHashCode(callSuper = true)
 public class Student extends User implements Comparable<Student> {
 
-    private Double gpa;  // Grade Point Average
-    private String adviser;  // Supervisor
+    Long team_id = null;
 
     public Student(Long id, String fullName, Integer age, String phoneNumber) {
         super(id, fullName, age, phoneNumber);
@@ -21,10 +22,11 @@ public class Student extends User implements Comparable<Student> {
 
     @Override
     public String toString() {
-        return String.format("%s %18s %2s %8s"
+        return String.format("%3s %23s %2s %8s"
                 , getId()
                 , getFullName()
                 , getAge()
                 , getPhoneNumber());
     }
 }
+

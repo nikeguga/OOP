@@ -1,10 +1,14 @@
-package service;
+package service.user;
 
 import model.Student;
 import model.User;
 import repository.StudentRepository;
 import repository.UserRepository;
+import service.comparator.UserComparator;
+import service.randomizer.StudentRandomizer;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,22 +16,34 @@ import java.util.List;
 public class StudentService implements UserService<Student> {
 
     private final UserRepository<Student> studentRepository;
+    private final StudentRandomizer studentRandomizer;
 
-    public StudentService(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public StudentService() throws IOException {
+        this.studentRepository = StudentRepository.getInstance();
+        this.studentRandomizer = new StudentRandomizer();
     }
 
     @Override
     public void create(String fullName, Integer age, String phoneNumber) {
         for (Student student : studentRepository.getAll()) {
             if (student.getFullName().equals(fullName)) {
-                System.out.println("(create:)'"+fullName+ "' <- запись уже существует");
+                System.out.println("(createStudent:)'" + fullName + "' <- запись уже существует");
                 return;
             }
         }
         Long id = studentRepository.getMaxId() + 1;
         Student student = new Student(id, fullName, age, phoneNumber);
         studentRepository.add(student);
+    }
+
+    @Override
+    public void createRandom(Integer quantity) {
+        for (int i = 0; i < quantity; i++) {
+            create(studentRandomizer.getData().get(0),
+                    Integer.valueOf(studentRandomizer.getData().get(1)),
+                    studentRandomizer.getData().get(2)
+            );
+        }
     }
 
     @Override
@@ -76,15 +92,24 @@ public class StudentService implements UserService<Student> {
     public void edit(String fullName, Integer age, String phoneNumber) {
         for (Student student : studentRepository.getAll()) {
             if (student.getFullName().equals(fullName)) {
-                System.out.println("(edit:)'"+fullName+ "' <- запись найдена");
-                System.out.println("(edit:)*поля age и phoneNumber обновлены*");
-                Long id = student.getId();
-                studentRepository.remove(fullName);
-                Student editedStudent = new Student(id, fullName, age, phoneNumber);
-                studentRepository.add(editedStudent);
+                System.out.println("(editStudent:)'" + fullName + "' <- запись найдена");
+                student.setAge(age);
+                student.setPhoneNumber(phoneNumber);
+                System.out.println("(editStudent:)*поля age и phoneNumber обновлены*");
                 return;
             }
         }
-        System.out.println("(edit:)'"+fullName+ "' <- запись не найдена");
+        System.out.println("(editStudent:)'" + fullName + "' <- запись не найдена");
+    }
+
+    @Override
+    public List<Student> getAvailableUsers() {
+        List<Student> studentList = new ArrayList<>();
+        for (Student student : studentRepository.getAll()) {
+            if (student.getTeam_id() == null) {
+                studentList.add(student);
+            }
+        }
+        return studentList;
     }
 }

@@ -1,8 +1,7 @@
 package controller;
 
 import model.Teacher;
-import service.TeacherService;
-import service.UserService;
+import service.user.UserService;
 
 import java.util.List;
 
@@ -10,13 +9,18 @@ public class TeacherController implements UserController<Teacher> {
 
     public UserService<Teacher> teacherService;
 
-    public TeacherController(TeacherService teacherService) {
+    public TeacherController(UserService<Teacher> teacherService) {
         this.teacherService = teacherService;
     }
 
     @Override
     public void create(String fullName, Integer age, String phoneNumber) {
         teacherService.create(fullName, age, phoneNumber);
+    }
+
+    @Override
+    public void createRandom(Integer quantity) {
+        teacherService.createRandom(quantity);
     }
 
     @Override
@@ -54,6 +58,4 @@ public class TeacherController implements UserController<Teacher> {
     public void edit(String fullName, Integer age, String phoneNumber) {
         teacherService.edit(fullName, age, phoneNumber);
     }
-
-
 }

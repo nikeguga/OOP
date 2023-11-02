@@ -1,4 +1,4 @@
-package service;
+package service.comparator;
 
 import model.User;
 
@@ -11,6 +11,5 @@ public class UserComparator<T extends User> implements Comparator<T> {
         String familyName1 = o1.getFullName().split("\\s+")[1];
         String familyName2 = o2.getFullName().split("\\s+")[1];
         return familyName1.compareTo(familyName2);
-
     }
 }

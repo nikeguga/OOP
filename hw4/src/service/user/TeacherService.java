@@ -1,10 +1,14 @@
-package service;
+package service.user;
 
 import model.Teacher;
 import model.User;
 import repository.TeacherRepository;
 import repository.UserRepository;
+import service.comparator.UserComparator;
+import service.randomizer.TeacherRandomizer;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,22 +16,34 @@ import java.util.List;
 public class TeacherService implements UserService<Teacher> {
 
     private final UserRepository<Teacher> teacherRepository;
+    private final TeacherRandomizer teacherRandomizer;
 
-    public TeacherService(TeacherRepository teacherRepository) {
-        this.teacherRepository = teacherRepository;
+    public TeacherService() throws IOException {
+        this.teacherRepository = TeacherRepository.getInstance();
+        this.teacherRandomizer = new TeacherRandomizer();
     }
 
     @Override
     public void create(String fullName, Integer age, String phoneNumber) {
         for (Teacher teacher : teacherRepository.getAll()) {
             if (teacher.getFullName().equals(fullName)) {
-                System.out.println("(create:)'"+fullName+ "' <- запись уже существует");
+                System.out.println("(createTeacher:)'" + fullName + "' <- запись уже существует");
                 return;
             }
         }
         Long id = teacherRepository.getMaxId() + 1;
         Teacher teacher = new Teacher(id, fullName, age, phoneNumber);
         teacherRepository.add(teacher);
+    }
+
+    @Override
+    public void createRandom(Integer quantity) {
+        for (int i = 0; i < quantity; i++) {
+            create(teacherRandomizer.getData().get(0),
+                    Integer.valueOf(teacherRandomizer.getData().get(1)),
+                    teacherRandomizer.getData().get(2)
+            );
+        }
     }
 
     @Override
@@ -76,8 +92,8 @@ public class TeacherService implements UserService<Teacher> {
     public void edit(String fullName, Integer age, String phoneNumber) {
         for (Teacher teacher : teacherRepository.getAll()) {
             if (teacher.getFullName().equals(fullName)) {
-                System.out.println("(edit:)'"+fullName+ "' <- запись найдена");
-                System.out.println("(edit:)*поля age и phoneNumber обновлены*");
+                System.out.println("(editTeacher:)'" + fullName + "' <- запись найдена");
+                System.out.println("(editTeacher:)*поля age и phoneNumber обновлены*");
                 Long id = teacher.getId();
                 teacherRepository.remove(fullName);
                 Teacher editedTeacher = new Teacher(id, fullName, age, phoneNumber);
@@ -85,6 +101,17 @@ public class TeacherService implements UserService<Teacher> {
                 return;
             }
         }
-        System.out.println("(edit:)'"+fullName+ "' <- запись не найдена");
+        System.out.println("(editTeacher:)'" + fullName + "' <- запись не найдена");
+    }
+
+    @Override
+    public List<Teacher> getAvailableUsers() {
+        List<Teacher> teacherList = new ArrayList<>();
+        for (Teacher teacher : teacherRepository.getAll()) {
+            if (teacher.getTeam_id() == null) {
+                teacherList.add(teacher);
+            }
+        }
+        return teacherList;
     }
 }

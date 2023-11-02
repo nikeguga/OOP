@@ -7,6 +7,7 @@ import java.util.List;
 public interface UserController<T extends User>  {
 
     void create(String fullName, Integer age, String phoneNumber);
+    void createRandom(Integer quantity);
     List<T> getAllUsersSortedByFirstName();
     List<T> getAllUsersSortedByLastName();
     List<T> getAllUsersSortedByAge();
@@ -14,6 +15,5 @@ public interface UserController<T extends User>  {
     boolean remove(String fullName);
     List<T> getAll();
     void edit(String fullName, Integer age, String phoneNumber);
-
 
 }

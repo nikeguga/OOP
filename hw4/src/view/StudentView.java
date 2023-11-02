@@ -15,7 +15,7 @@ public class StudentView implements UserView<Student> {
 
     @Override
     public void sendOnConsole(String sortType) {
-        int separatorLength = 32;
+        int separatorLength = 39;
         List<Student> students = switch (sortType) {
             case SortType.NONE -> controller.getAll();
             case SortType.ID -> controller.getAllUsersSortedById();
@@ -24,11 +24,12 @@ public class StudentView implements UserView<Student> {
             case SortType.AGE -> controller.getAllUsersSortedByAge();
             default -> null;
         };
-        if (students == null) {
-            System.out.println("students is null");
+        if (students == null || students.size() < 1) {
+            System.out.println("(DB:) студенты отсутствуют");
             return;
         }
         System.out.println("-".repeat(separatorLength));
+        System.out.println("Студенты:");
         for (Student student : students) {
             System.out.println(student);
         }
@@ -38,6 +39,11 @@ public class StudentView implements UserView<Student> {
     @Override
     public void create(String fullName, Integer age, String phoneNumber) {
         controller.create(fullName, age, phoneNumber);
+    }
+
+    @Override
+    public void createRandom(Integer quantity) {
+        controller.createRandom(quantity);
     }
 
     @Override

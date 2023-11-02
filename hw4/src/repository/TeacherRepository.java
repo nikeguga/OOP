@@ -6,10 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeacherRepository implements UserRepository<Teacher> {
+    private static TeacherRepository INSTANCE;
+
+    public static TeacherRepository getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new TeacherRepository();
+        }
+        return INSTANCE;
+    }
+
     private final List<Teacher> teachers;
 
     public TeacherRepository() {
-        this.teachers = new ArrayList<>();
+        teachers = new ArrayList<>();
     }
 
     @Override
@@ -42,5 +51,4 @@ public class TeacherRepository implements UserRepository<Teacher> {
         }
         return maxId;
     }
-
 }

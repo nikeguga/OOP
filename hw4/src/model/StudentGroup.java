@@ -2,7 +2,7 @@ package model;
 
 import lombok.Getter;
 import lombok.ToString;
-import service.StudentGroupIterator;
+import service.iterator.StudentGroupIterator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,7 +16,7 @@ public class StudentGroup implements Iterable<Student> {
     private final List<Student> studentsList;
 
     public StudentGroup() {
-        studentsList = new ArrayList<>();
+        this.studentsList = new ArrayList<>();
     }
 
     @Override
